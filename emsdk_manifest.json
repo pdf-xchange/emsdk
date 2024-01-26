@@ -36,7 +36,7 @@
     "arch": "x86_64",
     "linux_url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/%releases-tag%/wasm-binaries.tar.xz",
     "macos_url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/mac/%releases-tag%/wasm-binaries.tar.xz",
-    "windows_url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/win/%releases-tag%/wasm-binaries.zip",
+    "windows_url": "https://github.com/pdf-xchange/emscripten/releases/download/emsdk-%releases-tag%/wasm-binaries.zip",
     "download_prefix": "%releases-tag%-",
     "install_path": "upstream",
     "activated_path": "%installation_dir%/emscripten",
