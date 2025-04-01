@@ -71,6 +71,7 @@ def _impl(ctx):
     cc_target_os = "emscripten"
 
     emscripten_dir = ctx.attr.emscripten_binaries.label.workspace_root
+    nodejs_path = ctx.file.nodejs_bin.path
 
     builtin_sysroot = emscripten_dir + "/emscripten/cache/sysroot"
 
@@ -934,7 +935,7 @@ def _impl(ctx):
                 "-iwithsysroot" + "/include/compat",
                 "-iwithsysroot" + "/include",
                 "-isystem",
-                emscripten_dir + "/lib/clang/19/include",
+                emscripten_dir + "/lib/clang/21/include",
             ],
         ),
         # Inputs and outputs
@@ -1060,6 +1061,10 @@ def _impl(ctx):
                     key = "EM_CONFIG_PATH",
                     value = ctx.file.em_config.path,
                 ),
+                env_entry(
+                    key = "NODE_JS_PATH",
+                    value = nodejs_path,
+                ),
             ],
         ),
         # Use llvm backend.  Off by default, enabled via --features=llvm_backend
@@ -1101,7 +1106,7 @@ def _impl(ctx):
         emscripten_dir + "/emscripten/cache/sysroot/include/c++/v1",
         emscripten_dir + "/emscripten/cache/sysroot/include/compat",
         emscripten_dir + "/emscripten/cache/sysroot/include",
-        emscripten_dir + "/lib/clang/19/include",
+        emscripten_dir + "/lib/clang/21/include",
     ]
 
     artifact_name_patterns = []
@@ -1134,6 +1139,7 @@ emscripten_cc_toolchain_config_rule = rule(
         "cpu": attr.string(mandatory = True, values = ["asmjs", "wasm"]),
         "em_config": attr.label(mandatory = True, allow_single_file = True),
         "emscripten_binaries": attr.label(mandatory = True, cfg = "exec"),
+        "nodejs_bin": attr.label(mandatory = True, allow_single_file = True),
         "script_extension": attr.string(mandatory = True, values = ["sh", "bat"]),
     },
     provides = [CcToolchainConfigInfo],
